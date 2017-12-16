@@ -66,6 +66,7 @@ int main(){
 				}
 				ArrayStack* TextoA = new ArrayStack(NumLineas);
 				if (file.is_open()){
+					cout<<endl;
 					cout<<"El contenido del archivo dice: "<<endl;
 					cout<<endl;
 					while (getline(file,linea)){
@@ -81,6 +82,7 @@ int main(){
 						int LineaEditar;
 						cout<<"Ingrese la el numero de la linea que quiere cambiar empezando en 0"<<endl;
 						cin>>LineaEditar;
+						cout<<endl;
 						string Cambiar = TextoA->posicion(LineaEditar);
 						cout<<Cambiar<<endl;
 						string Cambio;
