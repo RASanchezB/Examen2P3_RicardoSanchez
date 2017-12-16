@@ -38,7 +38,9 @@ int main(){
 					<<"2)Terminar"<<endl
 					<<"Elija la opcion que desea"<<endl;
 					cin>>opcion2;
-					Mensaje+="\n";
+					if(opcion2 == 1){
+						Mensaje+="\n";
+					}
 				}
 				ofstream salida(archive.c_str(), ios::app );
 				Archivo archivo(Mensaje);
@@ -55,31 +57,63 @@ int main(){
 				string linea;
 				int NumLineas=0;
 				ifstream file (archive.c_str());
-				if(file.is_open()){
-					while(getline(file,linea)){
+				ifstream fileExtra (archive.c_str());
+				if(fileExtra.is_open()){
+					while(getline(fileExtra,linea)){
 						NumLineas++;
 					}
-					file.close();
+					fileExtra.close();
 				}
 				ArrayStack* TextoA = new ArrayStack(NumLineas);
 				if (file.is_open()){
 					cout<<"El contenido del archivo dice: "<<endl;
 					cout<<endl;
 					while (getline(file,linea)){
-						cout<<linea<<'\n';
 						TextoA->push(linea);
 					}
 					while (!TextoA->isEmpty()) {
 						cout<<TextoA->pop()<<"";
 					}
 					cout<<endl;
-					delete TextoA;
+					int opcion3 = 0;
+					while(opcion3 != 2){
+						//Aqui se hace la edicion
+						int LineaEditar;
+						cout<<"Ingrese la el numero de la linea que quiere cambiar empezando en 0"<<endl;
+						cin>>LineaEditar;
+						string Cambiar = TextoA->posicion(LineaEditar);
+						cout<<Cambiar<<endl;
+						string Cambio;
+						cout<<"Ingrese la nueva linea que desea ingresar para sustituir la anterior"<<endl;
+						cin.ignore();
+						getline(cin,Cambio);
+						TextoA->sustitucion(Cambio,LineaEditar);
+						Cambiar=TextoA->posicion(LineaEditar);
+						//aqui termina la edicion
+						cout<<"--Menu--"<<endl
+						<<"1)Editar mas"<<endl
+						<<"2)Terminar la edicion"<<endl
+						<<"Ingrese el numero de la opcion que desee"<<endl;
+						cin>>opcion3;
+					}
+					string Guardar;
+					for(int i= 0;i<NumLineas;i++){
+						Guardar+=TextoA->posicion(i);
+						if(i==NumLineas-1){
+						}else{
+							Guardar+="\n";
+						}
+					}
+					ofstream salida(archive.c_str(), ios::out | ios::trunc );
+					Archivo archivo(Guardar);
+					salida<<archivo;
+					salida.close();
 					file.close();
 					cout<<endl;
-
 				}else{
 					cout<<"No existe ese archivo"<<endl;
 				}
+				delete TextoA;
 			}break;
 			case 3:{
 				cout<<"Saliendo"<<endl;

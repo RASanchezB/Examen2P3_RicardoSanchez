@@ -16,7 +16,8 @@ public:
 	virtual bool push(string);
 	virtual string pop();
 	virtual bool isEmpty();
-
+	string posicion(int);
+	void sustitucion(string,int);
 	~ArrayStack();
 };
 #endif
